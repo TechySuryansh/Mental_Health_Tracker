@@ -1,0 +1,291 @@
+<!DOCTYPE html>
+
+<html class="light" lang="en"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700;800&family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@100..900&display=swap" rel="stylesheet"/>
+<style>
+        @keyframes orbit {
+            0% { transform: rotate(0deg) translateX(120px) rotate(0deg); }
+            100% { transform: rotate(360deg) translateX(120px) rotate(-360deg); }
+        }
+        @keyframes pulse-glow {
+            0%, 100% { filter: drop-shadow(0 0 15px rgba(70, 72, 212, 0.4)) scale(1); opacity: 0.8; }
+            50% { filter: drop-shadow(0 0 40px rgba(70, 72, 212, 0.7)) scale(1.05); opacity: 1; }
+        }
+        @keyframes float {
+            0%, 100% { transform: translateY(0px); }
+            50% { transform: translateY(-10px); }
+        }
+        .particle {
+            position: absolute;
+            width: 6px;
+            height: 6px;
+            background: #6063ee;
+            border-radius: 50%;
+            filter: blur(1px);
+        }
+        .glass-card {
+            backdrop-filter: blur(20px);
+            background: rgba(255, 255, 255, 0.15);
+            border: 1px solid rgba(255, 255, 255, 0.3);
+        }
+        .progress-shimmer {
+            background: linear-gradient(90deg, transparent, rgba(255,255,255,0.4), transparent);
+            background-size: 200% 100%;
+            animation: shimmer 2s infinite;
+        }
+        @keyframes shimmer {
+            0% { background-position: -200% 0; }
+            100% { background-position: 200% 0; }
+        }
+        .fade-in-out {
+            transition: opacity 0.8s ease-in-out;
+        }
+    </style>
+<script id="tailwind-config">
+        tailwind.config = {
+            darkMode: "class",
+            theme: {
+                extend: {
+                    "colors": {
+                        "on-surface-variant": "#464554",
+                        "surface-tint": "#494bd6",
+                        "inverse-surface": "#283044",
+                        "secondary-fixed": "#8ff8b4",
+                        "on-tertiary-fixed": "#2a1700",
+                        "surface-container-low": "#f2f3ff",
+                        "tertiary-fixed": "#ffddb8",
+                        "surface-bright": "#faf8ff",
+                        "surface-container-highest": "#dae2fd",
+                        "primary-fixed-dim": "#c0c1ff",
+                        "tertiary-fixed-dim": "#ffb95f",
+                        "background": "#faf8ff",
+                        "tertiary": "#825100",
+                        "primary": "#4648d4",
+                        "on-tertiary": "#ffffff",
+                        "on-error": "#ffffff",
+                        "surface-container-lowest": "#ffffff",
+                        "primary-fixed": "#e1e0ff",
+                        "secondary": "#006d3e",
+                        "outline-variant": "#c7c4d7",
+                        "outline": "#767586",
+                        "surface-dim": "#d2d9f4",
+                        "error": "#ba1a1a",
+                        "secondary-fixed-dim": "#73db9a",
+                        "error-container": "#ffdad6",
+                        "on-background": "#131b2e",
+                        "on-secondary-fixed": "#00210f",
+                        "on-tertiary-container": "#fffbff",
+                        "secondary-container": "#8cf5b2",
+                        "surface-container-high": "#e2e7ff",
+                        "surface-container": "#eaedff",
+                        "tertiary-container": "#a36700",
+                        "surface": "#faf8ff",
+                        "on-secondary": "#ffffff",
+                        "surface-variant": "#dae2fd",
+                        "on-secondary-container": "#007241",
+                        "on-primary-fixed": "#07006c",
+                        "inverse-on-surface": "#eef0ff",
+                        "on-primary": "#ffffff",
+                        "primary-container": "#6063ee",
+                        "inverse-primary": "#c0c1ff",
+                        "on-secondary-fixed-variant": "#00522d",
+                        "on-error-container": "#93000a",
+                        "on-tertiary-fixed-variant": "#653e00",
+                        "on-primary-fixed-variant": "#2f2ebe",
+                        "on-primary-container": "#fffbff",
+                        "on-surface": "#131b2e"
+                    },
+                    "borderRadius": {
+                        "DEFAULT": "0.25rem",
+                        "lg": "0.5rem",
+                        "xl": "0.75rem",
+                        "full": "9999px"
+                    },
+                    "spacing": {
+                        "gutter": "24px",
+                        "section-gap": "80px",
+                        "container-max": "1200px",
+                        "margin-mobile": "20px",
+                        "unit": "8px"
+                    },
+                    "fontFamily": {
+                        "label-caps": ["Inter"],
+                        "headline-lg": ["Inter"],
+                        "headline-lg-mobile": ["Inter"],
+                        "display": ["Inter"],
+                        "body-sm": ["Inter"],
+                        "body-md": ["Inter"]
+                    },
+                    "fontSize": {
+                        "label-caps": ["12px", { "lineHeight": "1.0", "letterSpacing": "0.05em", "fontWeight": "600" }],
+                        "headline-lg": ["32px", { "lineHeight": "1.2", "letterSpacing": "-0.01em", "fontWeight": "600" }],
+                        "headline-lg-mobile": ["24px", { "lineHeight": "1.2", "fontWeight": "600" }],
+                        "display": ["48px", { "lineHeight": "1.1", "letterSpacing": "-0.02em", "fontWeight": "600" }],
+                        "body-sm": ["14px", { "lineHeight": "1.5", "fontWeight": "400" }],
+                        "body-md": ["16px", { "lineHeight": "1.6", "fontWeight": "400" }]
+                    }
+                },
+            },
+        }
+    </script>
+</head>
+<body class="bg-background text-on-background min-h-screen overflow-hidden selection:bg-primary/30">
+<!-- Deep Calming Gradient Background Layer -->
+<div class="fixed inset-0 z-0 bg-gradient-to-br from-surface via-primary-fixed to-surface-container-highest transition-colors duration-1000">
+<!-- Ambient Light Leaks -->
+<div class="absolute top-[-10%] left-[-10%] w-[50%] h-[50%] bg-primary/10 rounded-full blur-[120px]"></div>
+<div class="absolute bottom-[-10%] right-[-10%] w-[40%] h-[40%] bg-secondary/5 rounded-full blur-[100px]"></div>
+</div>
+<!-- Top App Bar (Suppressed but logically here for branding) -->
+<header class="fixed top-0 w-full z-50 bg-surface/20 backdrop-blur-xl border-b border-white/20 shadow-sm">
+<div class="flex justify-between items-center px-margin-mobile md:px-gutter py-4 w-full max-w-container-max mx-auto">
+<div class="flex items-center gap-2">
+<span class="material-symbols-outlined text-primary" style="font-variation-settings: 'FILL' 1;">psychology</span>
+<span class="font-headline-lg-mobile text-headline-lg-mobile font-bold text-primary">Mental Health Signal</span>
+</div>
+</div>
+</header>
+<!-- Main Analysis Canvas -->
+<main class="relative z-10 min-h-screen flex flex-col items-center justify-center px-margin-mobile">
+<!-- Central Animation Area -->
+<div class="relative w-72 h-72 flex items-center justify-center mb-16">
+<!-- Pulsing Brain Silhouette -->
+<div class="absolute z-20 transition-all duration-700" style="animation: pulse-glow 4s ease-in-out infinite;">
+<span class="material-symbols-outlined text-[120px] text-primary" style="font-variation-settings: 'FILL' 1;">psychology</span>
+</div>
+<!-- Orbiting Particles Container -->
+<div class="absolute inset-0 z-10" id="particle-system">
+<!-- Particles injected via JS for dynamic feel -->
+</div>
+<!-- Glowing Outer Ring -->
+<div class="absolute w-full h-full border-[1px] border-primary/20 rounded-full scale-110 opacity-50"></div>
+<div class="absolute w-full h-full border-[1px] border-primary/10 rounded-full scale-125 opacity-30"></div>
+</div>
+<!-- Glassmorphism Text Container -->
+<div class="glass-card px-10 py-8 rounded-3xl text-center max-w-md w-full shadow-xl" style="animation: float 6s ease-in-out infinite;">
+<div class="mb-2">
+<span class="font-label-caps text-label-caps text-primary uppercase tracking-widest opacity-80">System Analysis</span>
+</div>
+<h2 class="font-headline-lg-mobile text-headline-lg-mobile md:font-headline-lg md:text-headline-lg text-on-surface transition-all duration-500 min-h-[4rem] flex items-center justify-center" id="status-text">
+                Initializing cognitive scan...
+            </h2>
+<p class="font-body-sm text-body-sm text-on-surface-variant mt-4 opacity-70">
+                Your data is encrypted end-to-end. We value your mental privacy.
+            </p>
+</div>
+<!-- Bottom Progress Section -->
+<div class="fixed bottom-24 w-full max-w-lg px-margin-mobile flex flex-col items-center gap-4">
+<div class="w-full h-[6px] bg-surface-container-highest rounded-full overflow-hidden">
+<div class="h-full bg-primary-container w-[0%] transition-all duration-300 relative" id="progress-bar">
+<div class="absolute inset-0 progress-shimmer"></div>
+</div>
+</div>
+<div class="flex justify-between w-full font-label-caps text-label-caps text-on-surface-variant px-1">
+<span id="percent-text">0%</span>
+<span class="uppercase">Signal Strength: Optimal</span>
+</div>
+</div>
+</main>
+<!-- Footer Identity -->
+<footer class="fixed bottom-8 w-full z-10 flex flex-col items-center gap-2 text-center px-margin-mobile">
+<p class="font-body-sm text-body-sm text-on-surface-variant opacity-60">© 2024 Mental Health Signal. Privacy First.</p>
+</footer>
+<script>
+        // Particle System Generation
+        const particleContainer = document.getElementById('particle-system');
+        const particleCount = 12;
+
+        for (let i = 0; i < particleCount; i++) {
+            const particle = document.createElement('div');
+            particle.className = 'particle';
+            
+            // Randomize starting properties
+            const delay = Math.random() * 5;
+            const duration = 3 + Math.random() * 5;
+            const size = 3 + Math.random() * 4;
+            
+            particle.style.width = `${size}px`;
+            particle.style.height = `${size}px`;
+            particle.style.left = '50%';
+            particle.style.top = '50%';
+            particle.style.marginTop = `-${size/2}px`;
+            particle.style.marginLeft = `-${size/2}px`;
+            
+            // Apply unique orbit animation
+            particle.style.animation = `orbit ${duration}s linear infinite`;
+            particle.style.animationDelay = `-${delay}s`;
+            
+            // Randomize orbit radius slightly per particle via transform proxy
+            const radius = 100 + Math.random() * 60;
+            particle.style.setProperty('--orbit-radius', `${radius}px`);
+            
+            // Custom CSS for dynamic radius if needed, but here we use a fixed radius for elegance
+            particleContainer.appendChild(particle);
+        }
+
+        // Status Text & Progress Bar Logic
+        const statusPhrases = [
+            'Analyzing behavioral patterns...',
+            'Evaluating digital wellness...',
+            'Synchronizing neural baselines...',
+            'Filtering environmental noise...',
+            'Generating personalized insights...',
+            'Optimizing cognitive load metrics...',
+            'Finalizing wellness report...'
+        ];
+
+        const statusEl = document.getElementById('status-text');
+        const progressEl = document.getElementById('progress-bar');
+        const percentEl = document.getElementById('percent-text');
+        
+        let progress = 0;
+        let phraseIndex = 0;
+
+        function updateLoading() {
+            if (progress < 100) {
+                // Exponential-ish slow down near the end for "realism"
+                const increment = Math.max(0.2, (100 - progress) * 0.05 * Math.random());
+                progress += increment;
+                
+                if (progress > 100) progress = 100;
+                
+                progressEl.style.width = `${progress}%`;
+                percentEl.innerText = `${Math.floor(progress)}%`;
+
+                // Update text every ~15%
+                const targetPhraseIndex = Math.floor((progress / 100) * statusPhrases.length);
+                if (targetPhraseIndex !== phraseIndex && targetPhraseIndex < statusPhrases.length) {
+                    phraseIndex = targetPhraseIndex;
+                    statusEl.style.opacity = 0;
+                    setTimeout(() => {
+                        statusEl.innerText = statusPhrases[phraseIndex];
+                        statusEl.style.opacity = 1;
+                    }, 500);
+                }
+
+                requestAnimationFrame(updateLoading);
+            } else {
+                statusEl.innerText = "Analysis Complete";
+                statusEl.classList.add('text-secondary');
+                // Potential transition to next screen would go here
+            }
+        }
+
+        // Start loading after a short initial delay
+        setTimeout(() => {
+            updateLoading();
+        }, 800);
+
+        // Subtle background mouse parallax
+        window.addEventListener('mousemove', (e) => {
+            const x = (e.clientX / window.innerWidth) - 0.5;
+            const y = (e.clientY / window.innerHeight) - 0.5;
+            document.querySelector('main').style.transform = `translate(${x * 15}px, ${y * 15}px)`;
+        });
+    </script>
+</body></html>

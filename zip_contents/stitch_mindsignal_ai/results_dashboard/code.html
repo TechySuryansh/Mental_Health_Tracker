@@ -1,0 +1,332 @@
+<!DOCTYPE html>
+
+<html class="light" lang="en"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>Mental Health Signal - Result Dashboard</title>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700;800&family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@100..900&display=swap" rel="stylesheet"/>
+<style>
+        .material-symbols-outlined {
+            font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 24;
+        }
+        .glass-card {
+            background: rgba(255, 255, 255, 0.4);
+            backdrop-filter: blur(20px);
+            -webkit-backdrop-filter: blur(20px);
+            border: 1px solid rgba(255, 255, 255, 0.3);
+            box-shadow: 0 8px 32px 0 rgba(99, 102, 241, 0.05);
+        }
+        .sage-gradient {
+            background: linear-gradient(135deg, #73db9a 0%, #006d3e 100%);
+        }
+        .lavender-glow {
+            background: radial-gradient(circle at 50% 50%, rgba(192, 193, 255, 0.2) 0%, rgba(250, 248, 255, 1) 100%);
+        }
+        @keyframes breathe {
+            0%, 100% { transform: scale(1); opacity: 0.8; }
+            50% { transform: scale(1.05); opacity: 1; }
+        }
+        .animate-breathe {
+            animation: breathe 8s ease-in-out infinite;
+        }
+    </style>
+<script id="tailwind-config">
+        tailwind.config = {
+            darkMode: "class",
+            theme: {
+                extend: {
+                    "colors": {
+                        "on-surface-variant": "#464554",
+                        "surface-tint": "#494bd6",
+                        "inverse-surface": "#283044",
+                        "secondary-fixed": "#8ff8b4",
+                        "on-tertiary-fixed": "#2a1700",
+                        "surface-container-low": "#f2f3ff",
+                        "tertiary-fixed": "#ffddb8",
+                        "surface-bright": "#faf8ff",
+                        "surface-container-highest": "#dae2fd",
+                        "primary-fixed-dim": "#c0c1ff",
+                        "tertiary-fixed-dim": "#ffb95f",
+                        "background": "#faf8ff",
+                        "tertiary": "#825100",
+                        "primary": "#4648d4",
+                        "on-tertiary": "#ffffff",
+                        "on-error": "#ffffff",
+                        "surface-container-lowest": "#ffffff",
+                        "primary-fixed": "#e1e0ff",
+                        "secondary": "#006d3e",
+                        "outline-variant": "#c7c4d7",
+                        "outline": "#767586",
+                        "surface-dim": "#d2d9f4",
+                        "error": "#ba1a1a",
+                        "secondary-fixed-dim": "#73db9a",
+                        "error-container": "#ffdad6",
+                        "on-background": "#131b2e",
+                        "on-secondary-fixed": "#00210f",
+                        "on-tertiary-container": "#fffbff",
+                        "secondary-container": "#8cf5b2",
+                        "surface-container-high": "#e2e7ff",
+                        "surface-container": "#eaedff",
+                        "tertiary-container": "#a36700",
+                        "surface": "#faf8ff",
+                        "on-secondary": "#ffffff",
+                        "surface-variant": "#dae2fd",
+                        "on-secondary-container": "#007241",
+                        "on-primary-fixed": "#07006c",
+                        "inverse-on-surface": "#eef0ff",
+                        "on-primary": "#ffffff",
+                        "primary-container": "#6063ee",
+                        "inverse-primary": "#c0c1ff",
+                        "on-secondary-fixed-variant": "#00522d",
+                        "on-error-container": "#93000a",
+                        "on-tertiary-fixed-variant": "#653e00",
+                        "on-primary-fixed-variant": "#2f2ebe",
+                        "on-primary-container": "#fffbff",
+                        "on-surface": "#131b2e"
+                    },
+                    "borderRadius": {
+                        "DEFAULT": "0.25rem",
+                        "lg": "0.5rem",
+                        "xl": "0.75rem",
+                        "full": "9999px"
+                    },
+                    "spacing": {
+                        "gutter": "24px",
+                        "section-gap": "80px",
+                        "container-max": "1200px",
+                        "margin-mobile": "20px",
+                        "unit": "8px"
+                    },
+                    "fontFamily": {
+                        "label-caps": ["Inter"],
+                        "headline-lg": ["Inter"],
+                        "headline-lg-mobile": ["Inter"],
+                        "display": ["Inter"],
+                        "body-sm": ["Inter"],
+                        "body-md": ["Inter"]
+                    },
+                    "fontSize": {
+                        "label-caps": ["12px", { "lineHeight": "1.0", "letterSpacing": "0.05em", "fontWeight": "600" }],
+                        "headline-lg": ["32px", { "lineHeight": "1.2", "letterSpacing": "-0.01em", "fontWeight": "600" }],
+                        "headline-lg-mobile": ["24px", { "lineHeight": "1.2", "fontWeight": "600" }],
+                        "display": ["48px", { "lineHeight": "1.1", "letterSpacing": "-0.02em", "fontWeight": "600" }],
+                        "body-sm": ["14px", { "lineHeight": "1.5", "fontWeight": "400" }],
+                        "body-md": ["16px", { "lineHeight": "1.6", "fontWeight": "400" }]
+                    }
+                },
+            },
+        }
+    </script>
+</head>
+<body class="bg-background text-on-background font-body-md min-h-screen pb-32">
+<!-- Header (TopAppBar Prediction) -->
+<header class="fixed top-0 w-full z-50 bg-surface/20 backdrop-blur-xl border-b border-white/20 shadow-sm">
+<div class="flex justify-between items-center px-margin-mobile md:px-gutter py-4 w-full max-w-container-max mx-auto">
+<div class="flex items-center gap-2">
+<span class="material-symbols-outlined text-primary" style="font-variation-settings: 'FILL' 1;">psychology</span>
+<h1 class="font-headline-lg-mobile md:font-headline-lg text-primary font-bold">Mental Health Signal</h1>
+</div>
+<button class="bg-primary text-on-primary px-6 py-2 rounded-full font-label-caps hover:bg-primary-container transition-colors active:scale-95 duration-200">
+                Start
+            </button>
+</div>
+</header>
+<main class="pt-24 px-margin-mobile md:px-gutter max-w-container-max mx-auto">
+<!-- Dashboard Hero Section -->
+<section class="flex flex-col items-center py-section-gap relative">
+<div class="absolute inset-0 -z-10 animate-breathe blur-3xl opacity-20 bg-primary-fixed-dim rounded-full w-[400px] h-[400px] mx-auto top-20"></div>
+<!-- Score Gauge -->
+<div class="relative w-64 h-64 flex items-center justify-center">
+<svg class="w-full h-full transform -rotate-90">
+<circle class="text-surface-variant" cx="128" cy="128" fill="transparent" r="110" stroke="currentColor" stroke-width="12"></circle>
+<circle class="text-secondary" cx="128" cy="128" fill="transparent" r="110" stroke="currentColor" stroke-dasharray="691.15" stroke-dashoffset="152" stroke-linecap="round" stroke-width="12"></circle>
+</svg>
+<div class="absolute inset-0 flex flex-col items-center justify-center text-center">
+<span class="font-display text-display text-on-background">78</span>
+<span class="font-label-caps text-secondary uppercase">Healthy</span>
+</div>
+</div>
+<h2 class="mt-8 font-headline-lg text-headline-lg text-on-background text-center">Mental Health Score</h2>
+</section>
+<!-- Bento Grid Layout -->
+<div class="grid grid-cols-1 md:grid-cols-12 gap-gutter">
+<!-- AI Summary Card -->
+<div class="md:col-span-8 glass-card rounded-xl p-8 flex flex-col gap-6">
+<div class="flex items-center gap-3">
+<span class="material-symbols-outlined text-secondary-fixed-dim p-2 rounded-lg bg-secondary-container/20">smart_toy</span>
+<h3 class="font-headline-lg-mobile text-headline-lg-mobile">AI Insights</h3>
+</div>
+<p class="text-body-md text-on-surface-variant leading-relaxed">
+                    "Your digital-lifestyle balance is healthy, but consider reducing nighttime social media usage. We've detected a correlation between late-night screen time and slightly elevated stress markers the following morning."
+                </p>
+<div class="flex gap-4 mt-auto">
+<button class="flex items-center gap-2 text-primary font-label-caps hover:underline">
+                        Explore Full Analysis <span class="material-symbols-outlined text-sm">arrow_forward</span>
+</button>
+</div>
+</div>
+<!-- CTA Card -->
+<div class="md:col-span-4 flex flex-col gap-gutter">
+<button class="w-full h-full glass-card rounded-xl p-6 flex flex-col items-center justify-center gap-4 hover:bg-white/50 transition-all group border-primary/20">
+<span class="material-symbols-outlined text-4xl text-primary group-hover:scale-110 transition-transform">picture_as_pdf</span>
+<span class="font-label-caps">Download Detailed Report</span>
+</button>
+<button class="w-full h-full bg-primary-container text-on-primary-container rounded-xl p-6 flex flex-col items-center justify-center gap-4 hover:opacity-90 transition-all group">
+<span class="material-symbols-outlined text-4xl group-hover:scale-110 transition-transform">support_agent</span>
+<span class="font-label-caps">Connect with Coach</span>
+</button>
+</div>
+<!-- Lifestyle Breakdown Section -->
+<div class="md:col-span-12 mt-8">
+<h3 class="font-headline-lg-mobile text-headline-lg-mobile mb-6">Lifestyle Breakdown</h3>
+<div class="grid grid-cols-1 md:grid-cols-3 gap-gutter">
+<!-- Sleep Card -->
+<div class="glass-card rounded-xl p-6">
+<div class="flex justify-between items-start mb-4">
+<div>
+<p class="font-label-caps text-on-surface-variant">Sleep Quality</p>
+<p class="font-headline-lg-mobile">8h 12m</p>
+</div>
+<span class="material-symbols-outlined text-primary-fixed-dim">bedtime</span>
+</div>
+<div class="h-16 w-full flex items-end gap-1">
+<div class="bg-primary/20 w-full h-[60%] rounded-t-sm"></div>
+<div class="bg-primary/20 w-full h-[45%] rounded-t-sm"></div>
+<div class="bg-primary/20 w-full h-[80%] rounded-t-sm"></div>
+<div class="bg-primary/20 w-full h-[65%] rounded-t-sm"></div>
+<div class="bg-primary/60 w-full h-[90%] rounded-t-sm"></div>
+<div class="bg-primary/20 w-full h-[50%] rounded-t-sm"></div>
+<div class="bg-primary/20 w-full h-[70%] rounded-t-sm"></div>
+</div>
+</div>
+<!-- Activity Card -->
+<div class="glass-card rounded-xl p-6">
+<div class="flex justify-between items-start mb-4">
+<div>
+<p class="font-label-caps text-on-surface-variant">Daily Activity</p>
+<p class="font-headline-lg-mobile">6,420 steps</p>
+</div>
+<span class="material-symbols-outlined text-secondary-fixed-dim">directions_walk</span>
+</div>
+<div class="h-16 w-full flex items-end gap-1">
+<div class="bg-secondary/20 w-full h-[30%] rounded-t-sm"></div>
+<div class="bg-secondary/20 w-full h-[55%] rounded-t-sm"></div>
+<div class="bg-secondary/20 w-full h-[40%] rounded-t-sm"></div>
+<div class="bg-secondary/60 w-full h-[75%] rounded-t-sm"></div>
+<div class="bg-secondary/20 w-full h-[60%] rounded-t-sm"></div>
+<div class="bg-secondary/20 w-full h-[85%] rounded-t-sm"></div>
+<div class="bg-secondary/20 w-full h-[45%] rounded-t-sm"></div>
+</div>
+</div>
+<!-- Stress Card -->
+<div class="glass-card rounded-xl p-6">
+<div class="flex justify-between items-start mb-4">
+<div>
+<p class="font-label-caps text-on-surface-variant">Stress Level</p>
+<p class="font-headline-lg-mobile">Low</p>
+</div>
+<span class="material-symbols-outlined text-tertiary-fixed-dim">spa</span>
+</div>
+<div class="h-16 w-full flex items-end gap-1">
+<div class="bg-tertiary/20 w-full h-[80%] rounded-t-sm"></div>
+<div class="bg-tertiary/20 w-full h-[65%] rounded-t-sm"></div>
+<div class="bg-tertiary/60 w-full h-[40%] rounded-t-sm"></div>
+<div class="bg-tertiary/20 w-full h-[55%] rounded-t-sm"></div>
+<div class="bg-tertiary/20 w-full h-[30%] rounded-t-sm"></div>
+<div class="bg-tertiary/20 w-full h-[20%] rounded-t-sm"></div>
+<div class="bg-tertiary/20 w-full h-[25%] rounded-t-sm"></div>
+</div>
+</div>
+</div>
+</div>
+<!-- Personalized Recommendations -->
+<div class="md:col-span-12 mt-8">
+<div class="flex justify-between items-end mb-6">
+<h3 class="font-headline-lg-mobile text-headline-lg-mobile">Suggested Activities</h3>
+<a class="text-primary font-label-caps hover:underline" href="#">View All</a>
+</div>
+<div class="grid grid-cols-1 md:grid-cols-2 gap-gutter">
+<!-- Recommendation 1 -->
+<div class="glass-card rounded-xl overflow-hidden flex flex-row group cursor-pointer hover:shadow-lg transition-all">
+<div class="w-1/3 bg-cover bg-center" data-alt="A serene first-person perspective of a lush green forest trail with soft sunlight filtering through the canopy, creating a peaceful and rejuvenating outdoor atmosphere for a nature walk in high-end photographic style." style="background-image: url('https://lh3.googleusercontent.com/aida-public/AB6AXuD7HM8kytcgSuaouZ_VgUnEG-ppS9no4hzN66mEDp6dKllJ7LgAJ9Q_2sk0G9loBC1k_W6xDteGCfN5B9WMu_1kLkpYLIALLuBoucP3reBaf16bz-8cnmT31rfovrttTeA0NXna-ifqVFjO2cltlzVVC8vSvLArg5U48KGc9TodmSTQhtVTFyP8EGkqOFxW75oW73PIfUPC5TNxlDnWSw922v0xXCyl85VQ0Y2E97Yh2loufmqfFRnFRw')"></div>
+<div class="w-2/3 p-6 flex flex-col justify-between">
+<div>
+<div class="flex items-center gap-2 mb-2">
+<span class="material-symbols-outlined text-secondary text-sm">schedule</span>
+<span class="font-label-caps text-on-surface-variant">30m Session</span>
+</div>
+<h4 class="font-headline-lg-mobile mb-2">Afternoon Nature Walk</h4>
+<p class="text-body-sm text-on-surface-variant">Boost your focus and lower cortisol with a gentle walk in nature.</p>
+</div>
+<button class="mt-4 flex items-center gap-2 font-label-caps text-primary group-hover:gap-4 transition-all">
+                                START NOW <span class="material-symbols-outlined text-sm">play_arrow</span>
+</button>
+</div>
+</div>
+<!-- Recommendation 2 -->
+<div class="glass-card rounded-xl overflow-hidden flex flex-row group cursor-pointer hover:shadow-lg transition-all">
+<div class="w-1/3 bg-cover bg-center" data-alt="A minimalist meditation setup with a single candle and soft lavender-colored silk pillows in a bright, airy room with high-key lighting, evoking a sense of calm, clarity, and mental tranquility." style="background-image: url('https://lh3.googleusercontent.com/aida-public/AB6AXuBHoYW3NpKphUGP5oyZvIQ6aypFSsdz_pu3VhUUh72DpXP0iWNxPeJ1_8nbkRsdAJgy4tkNikXKRjZbn8HM5uUO9zvy2rfRr1jjU7okgL28wdGJnBaGkfEW5ClLBw8NlbZC75vxnq1GXVlpn-zBiAhIffAolvKzHCCBXQRGvrndsMvVvGlkbjYS2ODjZ6NvQsjdj7YqKZtF1393z-L4XZPm4eaLDsxV8b9daOkDGWPLd_XVZtTRQ_6vqQ')"></div>
+<div class="w-2/3 p-6 flex flex-col justify-between">
+<div>
+<div class="flex items-center gap-2 mb-2">
+<span class="material-symbols-outlined text-primary text-sm">schedule</span>
+<span class="font-label-caps text-on-surface-variant">15m Session</span>
+</div>
+<h4 class="font-headline-lg-mobile mb-2">Guided Breathwork</h4>
+<p class="text-body-sm text-on-surface-variant">Reset your nervous system with our 'Digital Detox' meditation.</p>
+</div>
+<button class="mt-4 flex items-center gap-2 font-label-caps text-primary group-hover:gap-4 transition-all">
+                                START NOW <span class="material-symbols-outlined text-sm">play_arrow</span>
+</button>
+</div>
+</div>
+</div>
+</div>
+</div>
+</main>
+<!-- Footer Prediction -->
+<footer class="w-full py-section-gap bg-surface-container-lowest text-secondary text-center mt-20">
+<div class="flex flex-col items-center gap-4 w-full px-margin-mobile">
+<p class="font-label-caps font-bold">Mental Health Signal</p>
+<div class="flex gap-6 font-body-sm text-on-surface-variant">
+<a class="hover:text-primary transition-colors" href="#">Privacy Policy</a>
+<a class="hover:text-primary transition-colors" href="#">Terms of Service</a>
+<a class="hover:text-primary transition-colors" href="#">Support</a>
+</div>
+<p class="font-body-sm text-on-surface-variant opacity-60">© 2024 Mental Health Signal. Privacy First.</p>
+</div>
+</footer>
+<!-- Bottom Navigation (Shell Mapping: Assess is active) -->
+<nav class="fixed bottom-0 w-full z-50 rounded-t-xl bg-surface/20 backdrop-blur-xl border-t border-white/20 shadow-[0_-10px_20px_rgba(99,102,241,0.05)] flex justify-around items-center py-3 px-2">
+<a class="flex flex-col items-center justify-center bg-primary-container text-on-primary-container rounded-full px-4 py-1 transition-all active:scale-90 duration-300 ease-in-out" href="#">
+<span class="material-symbols-outlined" style="font-variation-settings: 'FILL' 1;">analytics</span>
+<span class="font-label-caps">Assess</span>
+</a>
+<a class="flex flex-col items-center justify-center text-on-surface-variant hover:text-primary transition-all active:scale-90 duration-300 ease-in-out" href="#">
+<span class="material-symbols-outlined">history</span>
+<span class="font-label-caps">History</span>
+</a>
+<a class="flex flex-col items-center justify-center text-on-surface-variant hover:text-primary transition-all active:scale-90 duration-300 ease-in-out" href="#">
+<span class="material-symbols-outlined">smart_toy</span>
+<span class="font-label-caps">AI Coach</span>
+</a>
+<a class="flex flex-col items-center justify-center text-on-surface-variant hover:text-primary transition-all active:scale-90 duration-300 ease-in-out" href="#">
+<span class="material-symbols-outlined">person</span>
+<span class="font-label-caps">Profile</span>
+</a>
+</nav>
+<script>
+        // Micro-interaction for cards
+        document.querySelectorAll('.glass-card').forEach(card => {
+            card.addEventListener('mouseenter', () => {
+                card.style.transform = 'translateY(-4px)';
+            });
+            card.addEventListener('mouseleave', () => {
+                card.style.transform = 'translateY(0)';
+            });
+        });
+    </script>
+</body></html>

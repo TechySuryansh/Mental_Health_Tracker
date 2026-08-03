@@ -20,9 +20,12 @@ export default function RootLayout({
   return (
     <html
       lang="en"
-      className={`${inter.variable} h-full antialiased dark`}
+      className={`${inter.variable} h-full antialiased`}
     >
-      <body className="min-h-full flex flex-col bg-background text-foreground overflow-x-hidden selection:bg-primary/30">
+      <head>
+        <link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&display=swap" rel="stylesheet"/>
+      </head>
+      <body className="min-h-full flex flex-col bg-background text-on-background overflow-x-hidden selection:bg-primary-fixed selection:text-on-primary-fixed">
         <div className="flex flex-col min-h-screen">
           {children}
         </div>

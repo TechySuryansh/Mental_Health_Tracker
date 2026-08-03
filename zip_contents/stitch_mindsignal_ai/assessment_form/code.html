@@ -1,0 +1,477 @@
+<!DOCTYPE html>
+
+<html class="light" lang="en"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>Mental Health Signal | Assessment</title>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700;800&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<script id="tailwind-config">
+        tailwind.config = {
+            darkMode: "class",
+            theme: {
+                extend: {
+                    "colors": {
+                        "on-surface-variant": "#464554",
+                        "surface-tint": "#494bd6",
+                        "inverse-surface": "#283044",
+                        "secondary-fixed": "#8ff8b4",
+                        "on-tertiary-fixed": "#2a1700",
+                        "surface-container-low": "#f2f3ff",
+                        "tertiary-fixed": "#ffddb8",
+                        "surface-bright": "#faf8ff",
+                        "surface-container-highest": "#dae2fd",
+                        "primary-fixed-dim": "#c0c1ff",
+                        "tertiary-fixed-dim": "#ffb95f",
+                        "background": "#faf8ff",
+                        "tertiary": "#825100",
+                        "primary": "#4648d4",
+                        "on-tertiary": "#ffffff",
+                        "on-error": "#ffffff",
+                        "surface-container-lowest": "#ffffff",
+                        "primary-fixed": "#e1e0ff",
+                        "secondary": "#006d3e",
+                        "outline-variant": "#c7c4d7",
+                        "outline": "#767586",
+                        "surface-dim": "#d2d9f4",
+                        "error": "#ba1a1a",
+                        "secondary-fixed-dim": "#73db9a",
+                        "error-container": "#ffdad6",
+                        "on-background": "#131b2e",
+                        "on-secondary-fixed": "#00210f",
+                        "on-tertiary-container": "#fffbff",
+                        "secondary-container": "#8cf5b2",
+                        "surface-container-high": "#e2e7ff",
+                        "surface-container": "#eaedff",
+                        "tertiary-container": "#a36700",
+                        "surface": "#faf8ff",
+                        "on-secondary": "#ffffff",
+                        "surface-variant": "#dae2fd",
+                        "on-secondary-container": "#007241",
+                        "on-primary-fixed": "#07006c",
+                        "inverse-on-surface": "#eef0ff",
+                        "on-primary": "#ffffff",
+                        "primary-container": "#6063ee",
+                        "inverse-primary": "#c0c1ff",
+                        "on-secondary-fixed-variant": "#00522d",
+                        "on-error-container": "#93000a",
+                        "on-tertiary-fixed-variant": "#653e00",
+                        "on-primary-fixed-variant": "#2f2ebe",
+                        "on-primary-container": "#fffbff",
+                        "on-surface": "#131b2e"
+                    },
+                    "borderRadius": {
+                        "DEFAULT": "0.25rem",
+                        "lg": "0.5rem",
+                        "xl": "0.75rem",
+                        "full": "9999px"
+                    },
+                    "spacing": {
+                        "gutter": "24px",
+                        "section-gap": "80px",
+                        "container-max": "1200px",
+                        "margin-mobile": "20px",
+                        "unit": "8px"
+                    },
+                    "fontFamily": {
+                        "label-caps": ["Inter"],
+                        "headline-lg": ["Inter"],
+                        "headline-lg-mobile": ["Inter"],
+                        "display": ["Inter"],
+                        "body-sm": ["Inter"],
+                        "body-md": ["Inter"]
+                    },
+                    "fontSize": {
+                        "label-caps": ["12px", {"lineHeight": "1.0", "letterSpacing": "0.05em", "fontWeight": "600"}],
+                        "headline-lg": ["32px", {"lineHeight": "1.2", "letterSpacing": "-0.01em", "fontWeight": "600"}],
+                        "headline-lg-mobile": ["24px", {"lineHeight": "1.2", "fontWeight": "600"}],
+                        "display": ["48px", {"lineHeight": "1.1", "letterSpacing": "-0.02em", "fontWeight": "600"}],
+                        "body-sm": ["14px", {"lineHeight": "1.5", "fontWeight": "400"}],
+                        "body-md": ["16px", {"lineHeight": "1.6", "fontWeight": "400"}]
+                    }
+                },
+            },
+        }
+    </script>
+<style>
+        .glass-card {
+            background: rgba(255, 255, 255, 0.4);
+            backdrop-filter: blur(20px);
+            -webkit-backdrop-filter: blur(20px);
+            border: 1px solid rgba(255, 255, 255, 0.3);
+        }
+        
+        .step-transition {
+            transition: all 0.5s cubic-bezier(0.4, 0, 0.2, 1);
+        }
+
+        .input-pill {
+            @apply bg-white/50 border border-outline-variant/30 rounded-full px-6 py-3 focus:ring-2 focus:ring-primary focus:border-transparent outline-none transition-all;
+        }
+
+        input[type="range"] {
+            -webkit-appearance: none;
+            width: 100%;
+            background: transparent;
+        }
+
+        input[type="range"]::-webkit-slider-runnable-track {
+            width: 100%;
+            height: 6px;
+            cursor: pointer;
+            background: #dae2fd;
+            border-radius: 3px;
+        }
+
+        input[type="range"]::-webkit-slider-thumb {
+            height: 20px;
+            width: 20px;
+            border-radius: 50%;
+            background: #4648d4;
+            cursor: pointer;
+            -webkit-appearance: none;
+            margin-top: -7px;
+            box-shadow: 0 0 10px rgba(70, 72, 212, 0.3);
+        }
+
+        .step-inactive {
+            opacity: 0;
+            transform: translateY(20px);
+            pointer-events: none;
+            position: absolute;
+        }
+
+        .step-active {
+            opacity: 1;
+            transform: translateY(0);
+            pointer-events: auto;
+            position: relative;
+        }
+    </style>
+</head>
+<body class="bg-background text-on-background min-h-screen font-body-md selection:bg-primary-fixed selection:text-on-primary-fixed">
+<!-- Top Navigation (Shell Implementation) -->
+<header class="fixed top-0 w-full z-50 bg-surface/20 dark:bg-surface/20 backdrop-blur-xl border-b border-white/20 shadow-sm">
+<div class="flex justify-between items-center px-margin-mobile md:px-gutter py-4 w-full max-w-container-max mx-auto">
+<div class="flex items-center gap-3">
+<span class="material-symbols-outlined text-primary text-3xl">psychology</span>
+<span class="font-headline-lg-mobile text-headline-lg-mobile font-bold text-primary">Mental Health Signal</span>
+</div>
+<button class="bg-primary text-on-primary px-6 py-2 rounded-full font-label-caps text-label-caps hover:bg-primary-container transition-colors active:scale-95 duration-200">
+                Cancel
+            </button>
+</div>
+</header>
+<main class="pt-24 pb-32 px-margin-mobile md:px-gutter max-w-container-max mx-auto min-h-screen flex flex-col md:flex-row gap-12 items-start justify-center">
+<!-- Vertical Stepper (Desktop Sidebar) -->
+<aside class="hidden md:flex flex-col gap-8 w-64 sticky top-32">
+<div class="flex flex-col gap-6">
+<div class="flex items-center gap-4 group transition-all duration-300" id="step-nav-1">
+<div class="step-indicator w-10 h-10 rounded-full flex items-center justify-center bg-primary text-on-primary font-bold shadow-lg">
+<span class="material-symbols-outlined text-xl">person</span>
+</div>
+<div>
+<p class="font-label-caps text-label-caps text-primary">Step 1</p>
+<p class="font-bold text-on-surface">Demographics</p>
+</div>
+</div>
+<div class="w-px h-8 bg-outline-variant/30 ml-5"></div>
+<div class="flex items-center gap-4 opacity-40 group transition-all duration-300" id="step-nav-2">
+<div class="step-indicator w-10 h-10 rounded-full flex items-center justify-center bg-surface-container-highest text-on-surface-variant font-bold">
+<span class="material-symbols-outlined text-xl">smartphone</span>
+</div>
+<div>
+<p class="font-label-caps text-label-caps text-on-surface-variant">Step 2</p>
+<p class="font-bold text-on-surface">Digital Habits</p>
+</div>
+</div>
+<div class="w-px h-8 bg-outline-variant/30 ml-5"></div>
+<div class="flex items-center gap-4 opacity-40 group transition-all duration-300" id="step-nav-3">
+<div class="step-indicator w-10 h-10 rounded-full flex items-center justify-center bg-surface-container-highest text-on-surface-variant font-bold">
+<span class="material-symbols-outlined text-xl">favorite</span>
+</div>
+<div>
+<p class="font-label-caps text-label-caps text-on-surface-variant">Step 3</p>
+<p class="font-bold text-on-surface">Lifestyle</p>
+</div>
+</div>
+<div class="w-px h-8 bg-outline-variant/30 ml-5"></div>
+<div class="flex items-center gap-4 opacity-40 group transition-all duration-300" id="step-nav-4">
+<div class="step-indicator w-10 h-10 rounded-full flex items-center justify-center bg-surface-container-highest text-on-surface-variant font-bold">
+<span class="material-symbols-outlined text-xl">drive_file_rename</span>
+</div>
+<div>
+<p class="font-label-caps text-label-caps text-on-surface-variant">Step 4</p>
+<p class="font-bold text-on-surface">Current State</p>
+</div>
+</div>
+</div>
+</aside>
+<!-- Form Container -->
+<section class="w-full max-w-2xl mx-auto relative overflow-hidden">
+<form class="w-full" id="assessment-form">
+<!-- Step 1: Demographics -->
+<div class="step-active step-transition glass-card rounded-[32px] p-8 md:p-12 shadow-xl" id="step-1">
+<h2 class="font-headline-lg text-headline-lg text-on-surface mb-2">Tell us about yourself</h2>
+<p class="text-on-surface-variant mb-10">This helps us baseline your profile against demographic mental health markers.</p>
+<div class="space-y-10">
+<!-- Age Slider -->
+<div class="space-y-4">
+<div class="flex justify-between items-center">
+<label class="font-bold text-on-surface">Age</label>
+<span class="text-primary font-bold text-xl" id="age-val">25</span>
+</div>
+<input class="w-full" max="100" min="13" oninput="document.getElementById('age-val').innerText = this.value" type="range" value="25"/>
+</div>
+<!-- Gender Radios -->
+<div class="space-y-4">
+<label class="font-bold text-on-surface block">Gender</label>
+<div class="flex flex-wrap gap-4">
+<label class="flex-1 min-w-[120px] cursor-pointer">
+<input class="hidden peer" name="gender" type="radio" value="male"/>
+<div class="p-4 border border-outline-variant/30 rounded-2xl text-center peer-checked:bg-primary-container peer-checked:text-on-primary-container peer-checked:border-primary transition-all">Male</div>
+</label>
+<label class="flex-1 min-w-[120px] cursor-pointer">
+<input class="hidden peer" name="gender" type="radio" value="female"/>
+<div class="p-4 border border-outline-variant/30 rounded-2xl text-center peer-checked:bg-primary-container peer-checked:text-on-primary-container peer-checked:border-primary transition-all">Female</div>
+</label>
+<label class="flex-1 min-w-[120px] cursor-pointer">
+<input class="hidden peer" name="gender" type="radio" value="non-binary"/>
+<div class="p-4 border border-outline-variant/30 rounded-2xl text-center peer-checked:bg-primary-container peer-checked:text-on-primary-container peer-checked:border-primary transition-all">Other</div>
+</label>
+</div>
+</div>
+<!-- Country Select -->
+<div class="space-y-4">
+<label class="font-bold text-on-surface block">Country</label>
+<select class="w-full input-pill bg-white/50 appearance-none">
+<option>United States</option>
+<option>United Kingdom</option>
+<option>Canada</option>
+<option>Germany</option>
+<option>Japan</option>
+<option>Australia</option>
+</select>
+</div>
+</div>
+<div class="mt-12 flex justify-end">
+<button class="bg-primary text-on-primary px-8 py-4 rounded-full font-bold flex items-center gap-2 hover:shadow-lg hover:shadow-primary/20 transition-all active:scale-95" onclick="nextStep(1, 2)" type="button">
+                            Continue
+                            <span class="material-symbols-outlined">arrow_forward</span>
+</button>
+</div>
+</div>
+<!-- Step 2: Digital Habits -->
+<div class="step-inactive step-transition glass-card rounded-[32px] p-8 md:p-12 shadow-xl" id="step-2">
+<h2 class="font-headline-lg text-headline-lg text-on-surface mb-2">Digital Habits</h2>
+<p class="text-on-surface-variant mb-10">Your interaction with technology impacts your dopamine levels and stress.</p>
+<div class="space-y-10">
+<div class="space-y-4">
+<label class="font-bold text-on-surface block">Primary Platform</label>
+<select class="w-full input-pill appearance-none">
+<option>Instagram</option>
+<option>TikTok</option>
+<option>X / Twitter</option>
+<option>Reddit</option>
+<option>LinkedIn</option>
+<option>YouTube</option>
+</select>
+</div>
+<div class="space-y-4">
+<div class="flex justify-between items-center">
+<label class="font-bold text-on-surface">Daily Screen Time (Hours)</label>
+<span class="text-primary font-bold text-xl" id="usage-val">4</span>
+</div>
+<input class="w-full" max="18" min="0" oninput="document.getElementById('usage-val').innerText = this.value" type="range" value="4"/>
+</div>
+<div class="space-y-4">
+<label class="font-bold text-on-surface block">Estimated Daily Unlocks</label>
+<input class="w-full input-pill" placeholder="e.g. 50" type="number"/>
+</div>
+</div>
+<div class="mt-12 flex justify-between items-center">
+<button class="text-on-surface-variant font-bold flex items-center gap-2 hover:text-primary transition-colors" onclick="nextStep(2, 1)" type="button">
+<span class="material-symbols-outlined">arrow_back</span>
+                            Back
+                        </button>
+<button class="bg-primary text-on-primary px-8 py-4 rounded-full font-bold flex items-center gap-2 hover:shadow-lg hover:shadow-primary/20 transition-all active:scale-95" onclick="nextStep(2, 3)" type="button">
+                            Continue
+                            <span class="material-symbols-outlined">arrow_forward</span>
+</button>
+</div>
+</div>
+<!-- Step 3: Lifestyle -->
+<div class="step-inactive step-transition glass-card rounded-[32px] p-8 md:p-12 shadow-xl" id="step-3">
+<h2 class="font-headline-lg text-headline-lg text-on-surface mb-2">Daily Lifestyle</h2>
+<p class="text-on-surface-variant mb-10">Foundation blocks of mental well-being: movement, sleep, and focus.</p>
+<div class="space-y-10">
+<div class="space-y-4">
+<div class="flex justify-between items-center">
+<label class="font-bold text-on-surface">Sleep (Hours/Night)</label>
+<span class="text-primary font-bold text-xl" id="sleep-val">7</span>
+</div>
+<input class="w-full" max="12" min="3" oninput="document.getElementById('sleep-val').innerText = this.value" step="0.5" type="range" value="7"/>
+</div>
+<div class="space-y-4">
+<div class="flex justify-between items-center">
+<label class="font-bold text-on-surface">Physical Activity (Min/Day)</label>
+<span class="text-primary font-bold text-xl" id="act-val">30</span>
+</div>
+<input class="w-full" max="180" min="0" oninput="document.getElementById('act-val').innerText = this.value" step="10" type="range" value="30"/>
+</div>
+<div class="space-y-4">
+<div class="flex justify-between items-center">
+<label class="font-bold text-on-surface">Productivity/Study (Hours/Day)</label>
+<span class="text-primary font-bold text-xl" id="prod-val">6</span>
+</div>
+<input class="w-full" max="14" min="0" oninput="document.getElementById('prod-val').innerText = this.value" step="1" type="range" value="6"/>
+</div>
+</div>
+<div class="mt-12 flex justify-between items-center">
+<button class="text-on-surface-variant font-bold flex items-center gap-2 hover:text-primary transition-colors" onclick="nextStep(3, 2)" type="button">
+<span class="material-symbols-outlined">arrow_back</span>
+                            Back
+                        </button>
+<button class="bg-primary text-on-primary px-8 py-4 rounded-full font-bold flex items-center gap-2 hover:shadow-lg hover:shadow-primary/20 transition-all active:scale-95" onclick="nextStep(3, 4)" type="button">
+                            Continue
+                            <span class="material-symbols-outlined">arrow_forward</span>
+</button>
+</div>
+</div>
+<!-- Step 4: Current State -->
+<div class="step-inactive step-transition glass-card rounded-[32px] p-8 md:p-12 shadow-xl text-center" id="step-4">
+<div class="w-20 h-20 bg-primary-container/20 rounded-3xl flex items-center justify-center mx-auto mb-6">
+<span class="material-symbols-outlined text-primary text-4xl" style="font-variation-settings: 'FILL' 1;">psychology</span>
+</div>
+<h2 class="font-headline-lg text-headline-lg text-on-surface mb-2">Current Mental State</h2>
+<p class="text-on-surface-variant mb-12">How are you feeling right now, in this moment?</p>
+<div class="space-y-12 max-w-md mx-auto">
+<div class="space-y-8">
+<div class="flex justify-between items-end">
+<span class="text-on-surface-variant text-sm font-bold">CALM</span>
+<span class="text-primary font-display text-display leading-none" id="stress-val">5</span>
+<span class="text-on-surface-variant text-sm font-bold">STRESSED</span>
+</div>
+<input class="w-full" max="10" min="1" oninput="document.getElementById('stress-val').innerText = this.value" type="range" value="5"/>
+</div>
+<div class="bg-surface-container-low p-6 rounded-2xl border border-white/50 text-left">
+<p class="font-body-sm text-on-surface-variant italic">"This data is processed locally using our privacy-first AI. Your results will never be shared without your explicit consent."</p>
+</div>
+</div>
+<div class="mt-16 flex flex-col gap-4">
+<button class="w-full bg-primary text-on-primary py-5 rounded-full font-bold text-lg hover:shadow-xl hover:shadow-primary/30 transition-all active:scale-[0.98]" type="submit">
+                            Analyze My Signal
+                        </button>
+<button class="text-on-surface-variant font-bold hover:text-primary py-2 transition-colors" onclick="nextStep(4, 3)" type="button">
+                            Go back and edit
+                        </button>
+</div>
+</div>
+</form>
+</section>
+</main>
+<!-- Success Modal (Hidden by default) -->
+<div class="fixed inset-0 z-[100] bg-on-background/40 backdrop-blur-md opacity-0 pointer-events-none transition-all duration-500 flex items-center justify-center" id="success-overlay">
+<div class="glass-card p-12 rounded-[40px] max-w-sm w-full text-center scale-90 transition-all duration-500" id="success-card">
+<div class="w-16 h-16 bg-secondary-container text-on-secondary-container rounded-full flex items-center justify-center mx-auto mb-6">
+<span class="material-symbols-outlined text-3xl">check_circle</span>
+</div>
+<h3 class="font-headline-lg text-headline-lg mb-4">Signal Sent</h3>
+<p class="text-on-surface-variant mb-8">Your assessment is being analyzed. We'll have your personalized mental health report ready in seconds.</p>
+<button class="w-full bg-primary text-on-primary py-4 rounded-full font-bold" onclick="window.location.reload()">Return to Dashboard</button>
+</div>
+</div>
+<!-- Bottom Navigation Shell (Mobile Only) -->
+<nav class="md:hidden fixed bottom-0 w-full z-50 bg-surface/20 dark:bg-surface/20 backdrop-blur-xl border-t border-white/20 shadow-[0_-10px_20px_rgba(99,102,241,0.05)] flex justify-around items-center py-3 px-2 rounded-t-xl">
+<div class="flex flex-col items-center justify-center bg-primary-container text-on-primary-container rounded-full px-4 py-1">
+<span class="material-symbols-outlined">analytics</span>
+<span class="font-label-caps text-label-caps">Assess</span>
+</div>
+<div class="flex flex-col items-center justify-center text-on-surface-variant hover:text-primary transition-all">
+<span class="material-symbols-outlined">history</span>
+<span class="font-label-caps text-label-caps">History</span>
+</div>
+<div class="flex flex-col items-center justify-center text-on-surface-variant hover:text-primary transition-all">
+<span class="material-symbols-outlined">smart_toy</span>
+<span class="font-label-caps text-label-caps">AI Coach</span>
+</div>
+<div class="flex flex-col items-center justify-center text-on-surface-variant hover:text-primary transition-all">
+<span class="material-symbols-outlined">person</span>
+<span class="font-label-caps text-label-caps">Profile</span>
+</div>
+</nav>
+<footer class="w-full py-section-gap bg-surface-container-lowest dark:bg-inverse-surface flex flex-col items-center gap-4 px-margin-mobile text-center">
+<span class="font-label-caps text-label-caps font-bold text-secondary dark:text-secondary-fixed">© 2024 Mental Health Signal. Privacy First.</span>
+<div class="flex gap-6">
+<a class="text-on-surface-variant hover:text-primary transition-colors text-body-sm" href="#">Privacy Policy</a>
+<a class="text-on-surface-variant hover:text-primary transition-colors text-body-sm" href="#">Terms of Service</a>
+<a class="text-on-surface-variant hover:text-primary transition-colors text-body-sm" href="#">Support</a>
+</div>
+</footer>
+<script>
+        function nextStep(current, next) {
+            const currentEl = document.getElementById(`step-${current}`);
+            const nextEl = document.getElementById(`step-${next}`);
+            
+            // Handle active step content
+            currentEl.classList.remove('step-active');
+            currentEl.classList.add('step-inactive');
+            
+            setTimeout(() => {
+                nextEl.classList.remove('step-inactive');
+                nextEl.classList.add('step-active');
+                
+                // Update Desktop Stepper Visuals
+                updateStepper(next);
+            }, 300);
+        }
+
+        function updateStepper(activeStep) {
+            for(let i = 1; i <= 4; i++) {
+                const navItem = document.getElementById(`step-nav-${i}`);
+                const indicator = navItem.querySelector('.step-indicator');
+                
+                if(i < activeStep) {
+                    // Completed
+                    navItem.classList.remove('opacity-40');
+                    navItem.classList.add('opacity-100');
+                    indicator.classList.remove('bg-primary', 'bg-surface-container-highest');
+                    indicator.classList.add('bg-secondary');
+                    indicator.innerHTML = '<span class="material-symbols-outlined">check</span>';
+                } else if(i === activeStep) {
+                    // Active
+                    navItem.classList.remove('opacity-40');
+                    navItem.classList.add('opacity-100');
+                    indicator.classList.remove('bg-secondary', 'bg-surface-container-highest');
+                    indicator.classList.add('bg-primary');
+                    indicator.classList.add('text-on-primary');
+                    
+                    // Reset Icons for steps
+                    const icons = ['person', 'smartphone', 'favorite', 'brain'];
+                    indicator.innerHTML = `<span class="material-symbols-outlined">${icons[i-1]}</span>`;
+                } else {
+                    // Pending
+                    navItem.classList.add('opacity-40');
+                    indicator.classList.remove('bg-primary', 'bg-secondary');
+                    indicator.classList.add('bg-surface-container-highest');
+                    const icons = ['person', 'smartphone', 'favorite', 'brain'];
+                    indicator.innerHTML = `<span class="material-symbols-outlined">${icons[i-1]}</span>`;
+                }
+            }
+        }
+
+        document.getElementById('assessment-form').addEventListener('submit', function(e) {
+            e.preventDefault();
+            const overlay = document.getElementById('success-overlay');
+            const card = document.getElementById('success-card');
+            
+            overlay.classList.remove('pointer-events-none', 'opacity-0');
+            setTimeout(() => {
+                card.classList.remove('scale-90');
+                card.classList.add('scale-100');
+            }, 100);
+        });
+    </script>
+</body></html>
