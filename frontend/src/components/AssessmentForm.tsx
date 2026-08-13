@@ -21,6 +21,7 @@ export function AssessmentForm() {
   const [currentStep, setCurrentStep] = useState(1);
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [result, setResult] = useState<number | null>(null);
+  const [aiInsight, setAiInsight] = useState<string | null>(null);
   const [error, setError] = useState<string | null>(null);
 
   const [formData, setFormData] = useState<AssessmentData>({
@@ -66,12 +67,25 @@ export function AssessmentForm() {
       if (!response.ok) throw new Error("Failed to get prediction from backend.");
 
       const data = await response.json();
+      const score = data.predicted_mental_health_score;
       
-      // Simulate slight delay for the Serene Logic AI loading effect
-      setTimeout(() => {
-        setResult(data.predicted_mental_health_score);
-        setIsSubmitting(false);
-      }, 1500);
+      // Fetch AI Insights
+      try {
+        const aiResponse = await fetch("/api/analyze-assessment", {
+          method: "POST",
+          headers: { "Content-Type": "application/json" },
+          body: JSON.stringify({ formData, score }),
+        });
+        if (aiResponse.ok) {
+          const aiData = await aiResponse.json();
+          setAiInsight(aiData.insight);
+        }
+      } catch (aiErr) {
+        console.error("AI Insight fetch failed", aiErr);
+      }
+      
+      setResult(score);
+      setIsSubmitting(false);
       
     } catch (err) {
       console.error(err);
@@ -81,7 +95,7 @@ export function AssessmentForm() {
   };
 
   if (result !== null) {
-    return <ResultsDashboard score={result} data={formData} onReset={() => setResult(null)} />;
+    return <ResultsDashboard score={result} data={formData} aiInsight={aiInsight} onReset={() => { setResult(null); setAiInsight(null); }} />;
   }
 
   const steps = [

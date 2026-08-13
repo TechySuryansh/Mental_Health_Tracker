@@ -16,7 +16,7 @@ type AssessmentData = {
   stress_level: string;
 };
 
-export function ResultsDashboard({ score, data, onReset }: { score: number; data: AssessmentData; onReset: () => void }) {
+export function ResultsDashboard({ score, data, aiInsight, onReset }: { score: number; data: AssessmentData; aiInsight?: string | null; onReset: () => void }) {
   // Determine score color based on value (Assuming lower is better stress/mental health issues, but here we'll just style it)
   // Let's assume out of 10.
   let scoreColor = "text-primary";
@@ -52,7 +52,7 @@ export function ResultsDashboard({ score, data, onReset }: { score: number; data
                 strokeLinecap="round" />
             </svg>
             <div className="text-center">
-              <span className={`font-display text-5xl md:text-7xl font-bold ${scoreColor}`}>{score}</span>
+              <span className={`font-display text-5xl md:text-7xl font-bold ${scoreColor}`}>{typeof score === 'number' ? score.toFixed(1) : score}</span>
               <span className="block text-on-surface-variant font-label-caps mt-2 uppercase tracking-widest">/ 10</span>
             </div>
           </div>
@@ -65,9 +65,16 @@ export function ResultsDashboard({ score, data, onReset }: { score: number; data
               <span className="material-symbols-outlined text-secondary-fixed-dim p-2 rounded-lg bg-secondary-container/20">smart_toy</span>
               <h3 className="font-headline-lg-mobile text-headline-lg-mobile text-on-surface">AI Insights</h3>
             </div>
-            <p className="text-body-md text-on-surface-variant leading-relaxed">
-              Based on your {data.avg_daily_usage_hours} hours of daily screen time primarily on {data.most_used_platform}, combined with your {data.stress_level} stress levels, our models detect a {score > 6 ? "higher" : "moderate"} cognitive load. Consider increasing your {data.physical_activity_hours}h of daily physical activity to improve sleep quality.
-            </p>
+            {aiInsight ? (
+              <p className="text-body-md text-on-surface-variant leading-relaxed">
+                {aiInsight}
+              </p>
+            ) : (
+              <div className="flex items-center justify-center h-full">
+                <span className="material-symbols-outlined animate-spin text-primary text-3xl">progress_activity</span>
+                <span className="ml-3 text-on-surface-variant font-bold">Generating personalized insights...</span>
+              </div>
+            )}
             <div className="mt-auto pt-4">
               <button className="flex items-center gap-2 text-primary font-label-caps hover:underline">
                 Explore Full Analysis <span className="material-symbols-outlined text-sm">arrow_forward</span>
